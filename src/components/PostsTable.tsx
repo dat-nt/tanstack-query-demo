@@ -1,4 +1,6 @@
 import "./PostsTable.css";
+
+import AddPost from "./AddPost";
 import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -64,6 +66,9 @@ const PostsTable: React.FC = () => {
 
     return (
         <Paper>
+            <Box p={2}>
+                <AddPost />
+            </Box>
             <TableContainer sx={{ maxHeight: 600 }}>
                 <Table stickyHeader>
                     <TableHead>
