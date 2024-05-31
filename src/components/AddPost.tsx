@@ -7,11 +7,12 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-
 import { NewPost } from "../types/NewPost";
+import { apiURL } from "../api/apiURL";
+import { postsQueryKey } from "../queryKeys/queryKeys";
 
 const addPost = async (newPost: NewPost) => {
-    const response = await axios.post("https://jsonplaceholder.typicode.com/posts", newPost);
+    const response = await axios.post(`${apiURL}/posts`, newPost);
     return response.data;
 };
 
@@ -25,10 +26,8 @@ const AddPost: React.FC = () => {
 
     const mutation = useMutation({
         mutationFn: addPost,
-
-        // onSuccess: Callback được gọi khi mutation thành công
-        onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["posts"] });
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: postsQueryKey });
 
             // Làm mới form thêm dữ liệu và focus vào dòng đầu của form
             setTitle("");
@@ -38,7 +37,7 @@ const AddPost: React.FC = () => {
                 firstInputRef.current.focus();
             }
 
-            alert(`Post added successfully: ${JSON.stringify(data)}`);
+            alert(`Post added successfully!`);
         },
     });
 
